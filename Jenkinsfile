@@ -111,7 +111,7 @@ pipeline {
                     echo "-------- DockerHub Login Successful --------"
 
                     echo "-------- Pushing Docker Image To DockerHub --------"
-                    docker push 8072388539/datastore:${params.App_Version}
+                    docker push ruchit27/jenkins-datastore:${params.App_Version}
                     echo "-------- Docker Image Pushed Successfully --------"
                 """
             }
