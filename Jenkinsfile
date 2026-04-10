@@ -53,5 +53,15 @@ pipeline {
                 }
             }
         }
+
+        stage("Artifact Store") {
+            steps {
+                sh """
+                  echo "-------- Pushing Artifacts To S3 --------"
+                  aws s3 cp ./target/*.jar s3://datastore-ruchit-artefact-store-jenkins-apps/
+                  echo "-------- Pushing Artifacts To S3 Completed --------"
+                """
+            }
+        }
     }
 }
