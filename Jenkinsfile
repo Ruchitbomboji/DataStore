@@ -92,5 +92,15 @@ pipeline {
                 """
             }
         }
+
+        stage("Docker Image Tag") {
+            steps {
+                sh """
+                    echo "-------- Tagging Docker Image --------"
+                    docker tag datastore:${params.App_Version} 8072388539/datastore:${params.App_Version}
+                    echo "-------- Tagging Docker Image Completed --------"
+                """
+            }
+        }
     }
 }
