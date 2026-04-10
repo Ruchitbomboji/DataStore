@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials("dockerhub-creds")
+    }
+
     stages {
         stage("Checkout") {
             steps {
@@ -60,6 +64,16 @@ pipeline {
                   echo "-------- Pushing Artifacts To S3 --------"
                   aws s3 cp ./target/*.jar s3://datastore-ruchit-artefact-store-jenkins-apps/
                   echo "-------- Pushing Artifacts To S3 Completed --------"
+                """
+            }
+        }
+
+        stage("Docker Image Build") {
+            steps {
+                sh """
+                  echo "-------- Building Docker Image --------"
+                  docker build -t datastore:"${App_Version}" .
+                  echo "-------- Image Successfully Built --------"
                 """
             }
         }
