@@ -97,7 +97,7 @@ pipeline {
             steps {
                 sh """
                     echo "-------- Tagging Docker Image --------"
-                    docker tag datastore:${params.App_Version} 8072388539/datastore:${params.App_Version}
+                    docker tag datastore:${params.App_Version} ruchit27/jenkins-datastore:${params.App_Version}
                     echo "-------- Tagging Docker Image Completed --------"
                 """
             }
@@ -107,11 +107,11 @@ pipeline {
             steps {
                 sh """
                     echo "-------- Logging To DockerHub --------"
-                    docker login -u \$DOCKERHUB_CREDENTIALS_USR --password \$DOCKERHUB_CREDENTIALS_PSW
+                    echo "\$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "\$DOCKERHUB_CREDENTIALS_USR" --password-stdin
                     echo "-------- DockerHub Login Successful --------"
 
                     echo "-------- Pushing Docker Image To DockerHub --------"
-                    docker push ruchit27/jenkins-datastore:tagname:${params.App_Version}
+                    docker push ruchit27/jenkins-datastore:${params.App_Version}
                     echo "-------- Docker Image Pushed Successfully --------"
                 """
             }
