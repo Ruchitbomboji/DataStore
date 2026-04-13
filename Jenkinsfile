@@ -132,6 +132,16 @@ pipeline {
                 input 'Trigger Down Stream Job??'
             }
         }
+
+        stage("Triggering Deployment") {
+            steps {
+                build job: "KubernetesDeployment",
+                      parameters: [
+                          string(name: "App_Name", value: "datastore-deploy"),
+                          string(name: "App_Version", value: "${params.App_Version}")
+                      ]
+            }
+        }
     }
 
     post {
